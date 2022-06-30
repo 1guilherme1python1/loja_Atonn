@@ -7,6 +7,5 @@ class model {
 		global $db;
 		$this->db = $db;
 	}
-
 }
 ?>

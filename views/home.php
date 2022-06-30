@@ -16,6 +16,6 @@
     ?>
     <?php endforeach ?>
 </div>
-<?php
-echo '<pre>';
-print_r($list);
+<?php for($q=1;$q<=$numberOfPages;$q++): ?>
+    <div class="paginationItem <?php echo ($currentPage == $q) ? 'ItemActive' : '';?>"><a href="<?php echo BASE_URL;?>?p=<?php echo $q;?>"><?php echo $q;?></a></div>
+<?php endfor;?>

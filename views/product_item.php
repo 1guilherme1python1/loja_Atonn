@@ -18,7 +18,7 @@
             <?php endif;?>
         </div>
         <div class="product_image">
-            <img src="<?php echo BASE_URL?>media/products/<?php echo $products_images[0]['url'];?>" alt="" width="100%">
+            <img src="<?php echo BASE_URL?>media/products/<?php echo $products_images[0]['url'];?>" alt="" height="150px" width="100%">
         </div>
         <div class="product_name"><?php echo $name;?></div>
         <div class="product_brand"><?php echo $brand_name;?></div>

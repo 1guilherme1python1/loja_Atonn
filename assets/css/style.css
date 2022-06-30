@@ -306,27 +306,28 @@ footer h3 {
 	font-weight: 600;
 }
 .product_tag_red{
-	background-color: red;
+	background-color: #f8484a;
 }
 .product_tag_green{
-	background-color: green;
+	background-color: #59b210;
 }
 .product_tag_blue{
-	background-color: blue;
+	background-color: #407ac5;
 }
 .product_item{
 	padding: 10px;
+	border: 2px solid white;
 }
 .product_item a{
 	text-decoration: none;
 	display: block;
 }
 .product_item:hover{
-	background-color: #eee;
+	border: 2px solid rgb(225, 221, 221);
 }
 .product_name{
 	font-weight: bold;
-	color: #00f;
+	color: #0e53a5;
 }
 .product_brand{
 	font-size: 11px;
@@ -344,4 +345,24 @@ footer h3 {
 	font-weight: bold;
 	margin-top: 15px;
 }
-
+.paginationItem{
+	width: 40px;
+	height: 40px;
+	border: 2px solid #eee;
+	font-size: 13px;
+	text-align: center;
+	line-height: 40px;
+	display: inline-block;
+}
+.paginationItem a{
+	display: block;
+	text-decoration: none;
+	color: #000;
+}
+.paginationItem:hover,
+.ItemActive{
+	border: 2px solid #c3c3c3;
+}
+.dropdown-menu{
+	width: 100%;
+}

@@ -1,7 +1,7 @@
 <?php
 class Products extends Model{
 
-    public function getList(){
+    public function getList($offset = 0, $limit=3){
 
         $array = array();
 
@@ -19,7 +19,9 @@ class Products extends Model{
         where
             categories.id = products.id_category) as category_name
         FROM 
-        products");
+            products
+        LIMIT
+            $offset, $limit");
         if($sql->rowCount()>0){
             $array = $sql->fetchAll(PDO::FETCH_ASSOC);
 
@@ -40,5 +42,11 @@ class Products extends Model{
             return $array;
         }
         return $array;
+    }
+    public function getTotal(){
+        $sql = $this->db->query("SELECT COUNT(*) AS c FROM products");
+        $total = $sql->fetch();
+
+        return $total['c'];
     }
 }
