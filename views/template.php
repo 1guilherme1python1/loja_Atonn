@@ -89,7 +89,11 @@
 								<?php endforeach; ?>
 					        </ul>
 					      </li>
-						<li><a href="#">Categoria X</a></li>
+						<?php if(isset($viewData['category_filter'])):?>
+							<?php foreach($viewData['category_filter'] as $item):?>
+								<li><a href="<?php echo BASE_URL."categories/enter/".$item['id'];?>"><?php echo $item['name'];?></a></li>
+							<?php endforeach;?>
+						<?php endif;?>
 					</ul>
 				</div>
 			</nav>
@@ -170,7 +174,7 @@
 								<div class="col-sm-4">
 									<h3><?php $this->lang->get('CATEGORIES'); ?></h3>
 									<ul>
-										<li><a href="#">Categoria X</a></li>
+										<li><a href="#">sfimdf</a></li>
 										<li><a href="#">Categoria X</a></li>
 										<li><a href="#">Categoria X</a></li>
 										<li><a href="#">Categoria X</a></li>

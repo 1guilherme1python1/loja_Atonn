@@ -15,6 +15,14 @@ class Categories extends Model{
         return $array;
     } 
 
+    public function getCategoryName($id){
+        $sql=$this->db->query("SELECT name FROM categories WHERE id='$id'");
+        if($sql->rowCount()>0){
+            $data = $sql->fetch(PDO::FETCH_ASSOC);
+        }
+        return $data['name'];
+    }
+
     private function CategoryOrganized(&$array){
         foreach($array as $id=>$item){
             if(isset($array[$item['sub']])){
@@ -32,5 +40,29 @@ class Categories extends Model{
             }
         }
         return false;
+    }
+
+    public function getCategoryTree($id){
+        $array = array();
+
+        $children = true;
+
+        while($children){
+
+            $sql = $this->db->query("SELECT * FROM categories WHERE id='$id'");
+            if($sql->rowCount()>0){
+                $sql = $sql->fetch(PDO::FETCH_ASSOC);
+                $array[] = $sql;
+                // print_r($array);
+                if(!empty($sql['sub'])){
+                    // print_r($sql['sub']);
+                    $id = $sql['sub'];
+                } else {
+                    $children = false;
+                }
+            }
+        }
+        $array = array_reverse($array);
+        return $array;
     }
 }

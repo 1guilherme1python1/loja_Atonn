@@ -1,11 +1,19 @@
 <?php
 class Products extends Model{
 
-    public function getList($offset = 0, $limit=3){
+    public function getList($offset = 0, $limit=3, $filters=[]){
 
         $array = array();
 
-        $sql = $this->db->query("SELECT *,
+        $where = [
+            '1=1'
+        ];
+
+        if(!empty($filters['category'])){
+            $where[] = "id_category = :id_category";
+        }
+
+        $sql = $this->db->prepare("SELECT *,
         (select 
             brands.name 
         from 
@@ -20,12 +28,18 @@ class Products extends Model{
             categories.id = products.id_category) as category_name
         FROM 
             products
+        WHERE ".implode(' AND ', $where)."
         LIMIT
             $offset, $limit");
+
+        if(!empty($filters['category'])){
+            $sql->bindValue(":id_category", $filters['category']);    
+        }
+
+        $sql->execute();
+
         if($sql->rowCount()>0){
             $array = $sql->fetchAll(PDO::FETCH_ASSOC);
-
-            $brands = new Brands();
 
             foreach($array as $key => $item){
                 // $array[$key]['brand_name'] = $brands->getNameById($item['id_brand']);
@@ -43,8 +57,19 @@ class Products extends Model{
         }
         return $array;
     }
-    public function getTotal(){
-        $sql = $this->db->query("SELECT COUNT(*) AS c FROM products");
+
+    public function getTotal($filters = []){
+
+        $Where = [
+            '1=1'
+        ];
+
+        $sql = $this->db->query("SELECT
+            COUNT(*) AS c 
+        FROM
+            products
+        WHERE ".implode(' AND ', $Where)."
+            ");
         $total = $sql->fetch();
 
         return $total['c'];
