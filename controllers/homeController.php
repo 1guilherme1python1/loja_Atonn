@@ -1,8 +1,6 @@
 <?php
 class homeController extends controller {
 
-	private $user;
-
     public function __construct() {
         parent::__construct();
     }
@@ -10,9 +8,15 @@ class homeController extends controller {
     public function index() {
         $dados = array();
 
+        $products = new Products();
+        $categories = new Categories();
+        $f = new Filters();
+
         $currentPage = 1;
         $offset = 0;
-        $limit = 3;
+        $limit = 6;
+
+        $filters = [];
 
         if(!empty($_GET['p'])){
             $currentPage = $_GET['p'];
@@ -20,13 +24,16 @@ class homeController extends controller {
         
         $offset = ($currentPage * $limit) - $limit;
 
-        $products = new Products();
-        $categories = new Categories();
+         
 
         $dados['list'] = $products->getList($offset,$limit);
         $dados['itemTotal'] = $products->getTotal();
         $dados['numberOfPages'] = ceil($dados['itemTotal']/$limit);
         $dados['currentPage'] = $currentPage;
+
+        $dados['filters'] = $f->getFilters($filters);
+
+        $dados['maxslider'] = $dados['filters']['maxslider'];
 
         $dados['categories'] = $categories->getList(); 
 

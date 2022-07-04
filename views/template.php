@@ -6,6 +6,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/bootstrap.min.css" type="text/css" />
+		<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/jquery-ui.min.css" type="text/css" />
+		<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/jquery-ui.struture.min.css" type="text/css" />
+		<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/jquery-ui.theme.min.css" type="text/css" />
 		<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css" type="text/css" />
 	</head>
 	<body>
@@ -32,7 +35,13 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-2 logo">
-						<a href="<?php echo BASE_URL; ?>"><img src="<?php echo BASE_URL; ?>assets/images/logo.png" /></a>
+						<a style="text-decoration: none;" href="<?php echo BASE_URL; ?>" class="link_logo">
+						<img height="70" src="<?php echo BASE_URL; ?>assets/images/logo_rhino.jpeg" />
+						<div class="logo_text">
+							<p class="text_logo_rhino">RHINO</p>
+							<p class="text_logo_text">technology</p>
+						</div>
+						</a>
 					</div>
 					<div class="col-sm-7">
 						<div class="head_help">(11) 9999-9999</div>
@@ -105,7 +114,89 @@
 				  	<aside>
 				  		<h1><?php $this->lang->get('FILTER'); ?></h1>
 				  		<div class="filterarea">
-
+								<div class="filterbox">
+									<div class="filtertitle">
+										<?php $this->lang->get('BRANDS');?>
+									</div>
+									<div class="filtercontent">
+										<?php foreach($viewData['filters']['brands'] as $item): ?>
+											<div class="filterItem">
+											<input type="checkbox" name="filter[brand][]" value="<?php echo $item['id']; ?>" id="filter_brand<?php echo $item['id'];?>">
+											<label for="filter_brand<?php echo $item['id']; ?>"><?php echo $item['name'];?></label><span style="float: right;">(<?php echo $item['count'];?>)</span>	
+											</div>
+										<?php endforeach; ?>
+									</div>
+								</div>
+								<div class="filterbox">
+									<div class="filtertitle">
+										<?php $this->lang->get('PRICE');?>
+									</div>
+									<div class="filtercontent">
+									<p>
+ 		 								<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+									</p>
+								<div id="slider-range"></div>
+									</div>
+								</div>
+								<div class="filterbox">
+									<div class="filtertitle">
+										<?php $this->lang->get('RATING');?>
+									</div>
+									<div class="filtercontent">
+									<div class="filterItem">
+											<input type="checkbox" name="filter[star][]" value="0" id="filter_star0">
+											<label for="filter_star0">(<?php $this->lang->get('NOEVALUATION')?>)</label>
+										</div>
+										<div class="filterItem">
+											<input type="checkbox" name="filter[star][]" value="1" id="filter_star1">
+											<label class="imgStar" for="filter_star1"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>	
+										</div>
+										<div class="filterItem">
+											<input type="checkbox" name="filter[star][]" value="2" id="filter_star2">
+											<label class="imgStar" for="filter_star2"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
+											<label class="imgStar" for="filter_star2"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>	
+										</div>
+										<div class="filterItem">
+											<input type="checkbox" name="filter[star][]" value="3" id="filter_star3">
+											<label class="imgStar" for="filter_star3"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
+											<label class="imgStar" for="filter_star3"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
+											<label class="imgStar" for="filter_star3"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
+										</div>
+										<div class="filterItem">
+											<input type="checkbox" name="filter[star][]" value="4" id="filter_star4">
+											<label class="imgStar" for="filter_star4"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
+											<label class="imgStar" for="filter_star4"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
+											<label class="imgStar" for="filter_star4"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
+											<label class="imgStar" for="filter_star4"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
+										</div>
+										<div class="filterItem">
+											<input type="checkbox" name="filter[star][]" value="5" id="filter_star5">
+											<label class="imgStar" for="filter_star5"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
+											<label class="imgStar" for="filter_star5"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
+											<label class="imgStar" for="filter_star5"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
+											<label class="imgStar" for="filter_star5"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
+											<label class="imgStar" for="filter_star5"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
+										</div>
+									</div>
+								</div>
+								<div class="filterbox">
+									<div class="filtertitle">
+										<?php $this->lang->get('SALE');?>
+									</div>
+									<div class="filtercontent">
+										<div class="filterItem">
+											<input type="checkbox" name="filter[sale]" id="filter_sale"><label for="filter_sale"><?php  $this->lang->get('ONSALE')?></label>	
+										</div>
+									</div>
+								</div>
+								<div class="filterbox">
+									<div class="filtertitle">
+										<?php $this->lang->get('OPTIONS');?>
+									</div>
+									<div class="filtercontent">
+										...
+									</div>
+								</div>
 				  		</div>
 
 				  		<div class="widget">
@@ -212,7 +303,7 @@
 	    	<div class="copyright">
 	    		<div class="container">
 	    			<div class="row">
-						<div class="col-sm-6">© <span>Loja 2.0</span> - <?php $this->lang->get('ALLRIGHTRESERVED'); ?>.</div>
+						<div class="col-sm-6">© <span>RHINO-PRODUCTION</span> - <?php $this->lang->get('ALLRIGHTRESERVED'); ?>.</div>
 						<div class="col-sm-6">
 							<div class="payments">
 								<img src="<?php echo BASE_URL; ?>assets/images/visa.png" />
@@ -225,8 +316,12 @@
 	    		</div>
 	    	</div>
 	    </footer>
-		<script type="text/javascript">var BASE_URL = '<?php echo BASE_URL; ?>';</script>
+		<script type="text/javascript">
+		var BASE_URL = '<?php echo BASE_URL; ?>';
+		var maxslider = <?php echo $viewData['maxslider'];?>;
+		</script>
 		<script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/jquery.min.js"></script>
+		<script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/script.js"></script>
 	</body>

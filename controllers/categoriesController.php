@@ -29,6 +29,7 @@ class categoriesController extends controller {
             $dados['currentPage'] = $currentPage;
 
             $dados['categories'] = $categories->getList();
+            $dados['id_category'] = $id;
         
             $this->loadTemplate('categories', $dados);
 
