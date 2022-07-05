@@ -1,6 +1,64 @@
 <?php
 class Products extends Model{
 
+    public function getAvailableOptions($filters = []){
+        $groups = [];
+        $ids = [];
+
+        $where = $this->buildWhere($filters);
+
+        $sql = $this->db->prepare("SELECT
+            id, options
+        FROM 
+            products
+        WHERE ".implode(' AND ',$where)."
+        ");
+
+        $this->bindWhere($filters, $sql);
+        $sql->execute();
+
+        if($sql->rowCount()>0){
+            $sql = $sql->fetchAll(PDO::FETCH_ASSOC);;
+            foreach($sql as $product){
+                // echo '<pre>';
+                // print_r($product['options']);
+
+                $ops = explode(",", $product['options']);
+                $ids[] = $product['id'];
+                foreach($ops as $op){
+                    if(!in_array($op, $groups)){
+                        $groups[] = $op;
+                    }
+                }
+            }
+        }
+        $options = $this->getAvailableValuesFromOptions($groups, $ids);
+        return $options;
+    }
+
+    public function getSaleCount($filters = []){
+        $where = $this->buildWhere($filters);
+
+        $where[] = 'sale = "1"';
+
+        $sql = $this->db->prepare("SELECT
+            COUNT(*) as c
+        FROM 
+            products
+        WHERE ".implode(' AND ',$where)."
+        ");
+
+        $this->bindWhere($filters, $sql);
+        $sql->execute();
+
+        if($sql->rowCount()>0){
+            $sql = $sql->fetch(PDO::FETCH_ASSOC);;
+            return $sql['c'];
+        } else {
+            return '0';
+        }
+    }
+
     public function getListOfStars($filters = []){
         $array = [];
 
@@ -148,5 +206,38 @@ class Products extends Model{
         if(!empty($filters['category'])){
             $sql->bindValue(":id_category", $filters['category']);
         }
+    }
+    private function getAvailableValuesFromOptions($groups, $ids){
+        $array = [];
+        $options = new Options();
+        foreach($groups as $op){
+            $array[$op] = [
+                'name' => $options->getName($op),
+                'options' => [
+
+                ] 
+            ];
+        }
+        $sql = $this->db->query("SELECT 
+            id ,p_value, id_option, COUNT(id_option) as c
+        FROM
+            products_options
+        WHERE 
+            id_option IN ('".implode("','", $groups)."') 
+                AND
+            id_product IN ('".implode("','", $ids)."')
+        GROUP BY p_value ORDER BY id_option
+        ");
+        if($sql->rowCount()>0){
+            $sql = $sql->fetchAll(PDO::FETCH_ASSOC);
+            foreach($sql as $ops){
+                $array[$ops['id_option']]['options'][] = [
+                    'value'=>$ops['p_value'],
+                    'count'=>$ops['c'],
+                    'id'=>$ops['id_option']
+                ];
+            }
+        }
+        return $array;
     }
 } 

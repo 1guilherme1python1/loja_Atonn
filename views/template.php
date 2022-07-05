@@ -146,21 +146,25 @@
 									<div class="filterItem">
 											<input type="checkbox" name="filter[star][]" value="0" id="filter_star0">
 											<label for="filter_star0">(<?php $this->lang->get('NOEVALUATION')?>)</label>
+											<span style="float: right;">(<?php echo $viewData['filters']['stars'][0]; ?>)</span>
 										</div>
 										<div class="filterItem">
 											<input type="checkbox" name="filter[star][]" value="1" id="filter_star1">
-											<label class="imgStar" for="filter_star1"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>	
+											<label class="imgStar" for="filter_star1"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
+											<span style="float: right;">(<?php echo $viewData['filters']['stars'][1]; ?>)</span>
 										</div>
 										<div class="filterItem">
 											<input type="checkbox" name="filter[star][]" value="2" id="filter_star2">
 											<label class="imgStar" for="filter_star2"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
-											<label class="imgStar" for="filter_star2"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>	
+											<label class="imgStar" for="filter_star2"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
+											<span style="float: right;">(<?php echo $viewData['filters']['stars'][2]; ?>)</span>
 										</div>
 										<div class="filterItem">
 											<input type="checkbox" name="filter[star][]" value="3" id="filter_star3">
 											<label class="imgStar" for="filter_star3"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
 											<label class="imgStar" for="filter_star3"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
 											<label class="imgStar" for="filter_star3"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
+											<span style="float: right;">(<?php echo $viewData['filters']['stars'][3]; ?>)</span>
 										</div>
 										<div class="filterItem">
 											<input type="checkbox" name="filter[star][]" value="4" id="filter_star4">
@@ -168,6 +172,7 @@
 											<label class="imgStar" for="filter_star4"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
 											<label class="imgStar" for="filter_star4"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
 											<label class="imgStar" for="filter_star4"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
+											<span style="float: right;">(<?php echo $viewData['filters']['stars'][4]; ?>)</span>
 										</div>
 										<div class="filterItem">
 											<input type="checkbox" name="filter[star][]" value="5" id="filter_star5">
@@ -176,6 +181,7 @@
 											<label class="imgStar" for="filter_star5"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
 											<label class="imgStar" for="filter_star5"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
 											<label class="imgStar" for="filter_star5"><img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13"></label>
+											<span style="float: right;">(<?php echo $viewData['filters']['stars'][5]; ?>)</span>
 										</div>
 									</div>
 								</div>
@@ -185,7 +191,9 @@
 									</div>
 									<div class="filtercontent">
 										<div class="filterItem">
-											<input type="checkbox" name="filter[sale]" id="filter_sale"><label for="filter_sale"><?php  $this->lang->get('ONSALE')?></label>	
+											<input type="checkbox" name="filter[sale]" id="filter_sale">
+											<label for="filter_sale"><?php  $this->lang->get('ONSALE')?></label>
+											<span style="float: right;">(<?php echo $viewData['filters']['sale']; ?>)</span>	
 										</div>
 									</div>
 								</div>
@@ -194,7 +202,16 @@
 										<?php $this->lang->get('OPTIONS');?>
 									</div>
 									<div class="filtercontent">
-										...
+										<?php foreach($viewData['filters']['options'] as $options):?>
+											<strong><?php echo $options['name'];?></strong><br>
+												<?php foreach($options['options'] as $op):?>
+													<div class="filterItem">
+														<input type="checkbox" name="filter[options][]" value="<?php echo $item['id']; ?>" id="filter_options<?php echo $op['id'];?>">
+														<label for="filter_options<?php echo $op['id']; ?>"><?php echo $op['value'];?></label><span style="float: right;">(<?php echo $op['count'];?>)</span>
+													</div>
+												<?php endforeach;?>
+											<br>
+										<?php endforeach;?>
 									</div>
 								</div>
 				  		</div>

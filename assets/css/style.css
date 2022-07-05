@@ -409,7 +409,8 @@ footer h3 {
 	margin-top: 10px;
 }
 .link_logo .text_logo_text{
-	color: #515151
+	color: #515151;
+	font-size: 16px;
 }
 .logo_text{
 	line-height: 15px;

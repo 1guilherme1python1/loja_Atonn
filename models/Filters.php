@@ -16,7 +16,7 @@ class Filters extends Model{
                 '4' => 0,
                 '5' => 0
             ],
-            'sale' => false, 
+            'sale' => 0, 
             'options' => []
         ];
 
@@ -49,6 +49,11 @@ class Filters extends Model{
                 }
             }
         }
+        //filtro de promoção
+        $array['sale'] = $products->getSaleCount($filters);
+
+        //filtros das opções 
+        $array['options'] = $products->getAvailableOptions($filters);
 
         return $array;
     }
