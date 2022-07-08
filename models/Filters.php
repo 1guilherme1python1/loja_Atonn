@@ -16,6 +16,8 @@ class Filters extends Model{
                 '4' => 0,
                 '5' => 0
             ],
+            'slider0' =>0,
+            'slider1'=>0,
             'sale' => 0, 
             'options' => []
         ];
@@ -38,7 +40,17 @@ class Filters extends Model{
             }
         }
         //criando o filtro de preço
+        if(isset($filters['slider0'])){
+            $array['slider0'] = $filters['slider0'];
+        }
+        if(isset($filters['slider1'])){
+            $array['slider1'] = $filters['slider1'];
+        }
         $array['maxslider'] = $products->getMaxPrice($filters);
+        if($array['slider1'] == 0){ 
+            $array['slider1'] = $array['maxslider'];
+        }
+          
 
         //criando o filtro das estrelas
         $star_products = $products->getListOfStars($filters);
