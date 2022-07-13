@@ -1,0 +1,5 @@
+<?php foreach($info_images as $info_image):?> 
+    <div class="photo_item">
+        <img src="<?php echo BASE_URL;?>media/products/<?php echo $info_image['url']?>" alt="">
+    </div>                 
+<?php endforeach;?>

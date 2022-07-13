@@ -48,10 +48,22 @@
 						<div class="head_email">contato@<span>loja2.com.br</span></div>
 						
 						<div class="search_area">
-							<form method="GET">
-								<input type="text" name="s" required placeholder="<?php $this->lang->get('SEARCHFORANITEM'); ?>" />
+							<form method="GET" action="<?php echo BASE_URL; ?>search">
+								<input type="text" name="s" value="<?php echo (!empty($viewData['searchTerm']))?$viewData['searchTerm']:''; ?>" required placeholder="<?php $this->lang->get('SEARCHFORANITEM'); ?>" />
 								<select name="category">
-									<option value=""><?php $this->lang->get('ALLCATEGORIES'); ?></option>
+								<option> <?php $this->lang->get('ALLCATEGORIES'); ?></option>
+								<?php foreach($viewData['categories'] as $cat):?>
+									<option <?php echo (isset($viewData['category']) && $viewData['category']==$cat['id'])?'selected="selected"':'';?> value="<?php echo $cat['id'];?>"><?php echo $cat['name'];?></option>
+									<?php
+										if(count($cat['subs'])>0){
+											$this->loadView('search_subcategory', array(
+												'subs'=>$cat['subs'],
+												'level'=>1,
+												'category'=>$viewData['category']
+											));
+										}
+									?>
+								<?php endforeach; ?>
 								</select>
 								<input type="submit" value="" />
 						    </form>
@@ -61,11 +73,11 @@
 						<a href="<?php echo BASE_URL; ?>cart">
 							<div class="cartarea">
 								<div class="carticon">
-									<div class="cartqt">9</div>
+									<div class="cartqt">11</div>
 								</div>
 								<div class="carttotal">
 									<?php $this->lang->get('CART'); ?>:<br/>
-									<span>R$ 999,99</span>
+									<span>R$ 750,80</span>
 								</div>
 							</div>
 						</a>
@@ -115,6 +127,10 @@
 				  		<h1><?php $this->lang->get('FILTER'); ?></h1>
 				  		<div class="filterarea">
 							<form method="GET">
+
+							<input type="hidden" name="s" value="<?php echo (isset($viewData['searchTerm']))?$viewData['searchTerm']:''; ?>">
+							<input type="hidden" name="category" value="<?php echo (isset($viewData['searchTerm']))?$viewData['category']:''; ?>">
+
 								<div class="filterbox">
 									<div class="filtertitle">
 										<?php $this->lang->get('BRANDS');?>

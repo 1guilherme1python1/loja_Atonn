@@ -6,6 +6,7 @@ class Filters extends Model{
         $products = new Products();
 
         $array = [
+            'searchTerm' => '',
             'brands' => [],
             'maxslider' => 1000,
             'stars' => [
@@ -22,6 +23,10 @@ class Filters extends Model{
             'options' => []
         ];
 
+        if(isset($filters['searchTerm'])){
+            $array['searchTerm'] = $filters['searchTerm'];
+        }
+        
         $array['brands'] = $brands->getList();
         $brands_products = $products->getListOfBrands($filters);
 

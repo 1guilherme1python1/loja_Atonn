@@ -212,11 +212,17 @@ class Products extends Model{
         if(!empty($filters['options'])){
             $where[] = "id IN (select id_product from products_options where products_options.p_value IN ('".implode("','", $filters['options'])."'))";
         }
+        if(!empty($filters['searchTerm'])){
+            $where[] = "name LIKE :searchTerm";
+        }
         return $where;
     }
     private function bindWhere($filters, &$sql){
         if(!empty($filters['category'])){
             $sql->bindValue(":id_category", $filters['category']);
+        }
+        if(!empty($filters['searchTerm'])){
+            $sql->bindValue(":searchTerm", '%'.$filters['searchTerm'].'%');
         }
     }
     private function getAvailableValuesFromOptions($groups, $ids){
@@ -251,5 +257,69 @@ class Products extends Model{
             }
         }
         return $array;
+    }
+    public function getProductInfo($id){
+        $array = [];
+
+        $sql = $this->db->query("SELECT 
+            *, 
+        (select 
+            brands.name 
+        from 
+            brands 
+        where 
+            brands.id = products.id_brand) as brand_name
+        FROM 
+            products 
+        WHERE 
+            id='$id'");
+
+        if($sql->rowCount()>0){
+            $row = $sql->fetch(PDO::FETCH_ASSOC);
+            $array[] = $row;
+        }
+
+        return $array;
+    }
+    public function getOptionsByProductId($id){
+        $options = [];
+
+        //ETAPA 1 - egar os nome das Opções;
+        $sql = $this->db->prepare("SELECT options FROM products WHERE id=:id");
+        $sql->bindValue(':id', $id);
+        $sql->execute();
+
+        if($sql->rowCount()>0){
+            $options = $sql->fetch(PDO::FETCH_ASSOC);
+            $options = $options['options'];
+
+            if(!empty($options)){
+                $sql = $this->db->query("SELECT * FROM options WHERE id IN (".$options.")");
+                $options = $sql->fetchAll(PDO::FETCH_ASSOC);
+            }
+            //ETAPA 2 - Pegar os valores da opções
+            $sql = $this->db->prepare("SELECT * FROM products_options WHERE id_product = :id");
+            $sql->bindValue(':id', $id);
+            $sql->execute();
+
+            $options_values = [];
+
+            if($sql->rowCount()>0){
+                foreach($sql->fetchAll(PDO::FETCH_ASSOC) as $op){
+                    $options_values[$op['id_option']] = $op['p_value'];
+                }
+            }
+
+            //ETAPA 3 - juntar tudo em unico array
+            foreach($options as $opKey=>$opvalue){
+                if(isset($options_values[$opvalue['id']])){
+                    $options[$opKey]['value'] = $options_values[$opvalue['id']];
+                } else {
+                    $options[$opKey]['value'] = '';
+                }
+            }
+        }
+        
+        return $options;
     }
 } 

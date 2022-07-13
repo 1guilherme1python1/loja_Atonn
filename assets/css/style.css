@@ -415,3 +415,65 @@ footer h3 {
 .logo_text{
 	line-height: 15px;
 }
+.original_price{
+	font-size: 25px;
+	font-weight: bold;
+}
+.price_from{
+	font-size: 14px;
+	color: #ccc;
+}
+.addtocartform{
+	margin-top: 20px;
+}
+.addtocart_qt{
+	height: 35px;
+	width: 35px;
+	text-align: center;
+	border: 1px solid #ccc;
+	outline: 0;
+	float: left;
+}
+.addtocartform button{
+	width: 30px;
+	height: 35px;
+	text-align: center;
+	border: 1px solid #ccc;
+	background-color: #ccc;
+	font-weight: bold;
+	float: left;
+}
+.addtocart_submit{
+	background-color: #59b210;
+	border: none;
+	color: white;
+	font-weight: bold;
+	height: 35px;
+	margin-left: 10px;
+	border-radius: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.mainphoto img{
+	width: 100%;
+	margin-top: 20px;
+}
+.photo_item0,
+.photo_item1,
+.photo_item2,
+.photo_item3{
+	width: 25%;
+	float: left;
+	align-items: center;
+	border: 1px solid #ccc;
+	margin-top: 28px;
+	cursor: pointer;
+}
+.photo_item0 img,
+.photo_item1 img,
+.photo_item2 img,
+.photo_item3 img{
+	width: 90%;
+	height: 50px;
+	align-items: center;
+}
