@@ -21,8 +21,17 @@ class cartController extends controller {
             $id = intval($_POST['id_product']);
             $qt = intval($_POST['qt_product']);
         }
-        echo $id;
-        echo "qt= ".$qt;
+        if(!isset($_SESSION['cart'])){
+            $_SESSION['cart'] = [];
+        }
+        if(isset($_SESSION['cart'][$id])){
+            $_SESSION['cart'][$id] += $qt;
+        } else{
+        $_SESSION['cart'][$id] = $qt;
+        }
+
+        header("Location: ".BASE_URL."cart");
+        exit;
     }
 
 }
