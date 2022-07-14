@@ -9,9 +9,12 @@ class searchController extends controller {
         $dados = array();
 
         $products = new Products();
-        $categories = new Categories();
+        // $categories = new Categories();
         $f = new Filters();
         $store = new Store();
+
+        $dados = $store->getTemplateData();
+
 
         if(isset($_GET['s']) && !empty($_GET['s'])){
 
@@ -30,7 +33,7 @@ class searchController extends controller {
             $filters['searchTerm'] = $searchTerm;
             $filters['category'] = $category;
             
-            print_r($filters['searchTerm']);
+            // print_r($filters['searchTerm']);
             if(!empty($_GET['p'])){
                 $currentPage = $_GET['p'];
             }
@@ -54,7 +57,7 @@ class searchController extends controller {
 
             $dados['maxslider'] = $dados['filters']['maxslider'];
 
-            $dados['categories'] = $categories->getList(); 
+            // $dados['categories'] = $categories->getList(); 
             
             $dados['filters_select'] = $filters;
 
@@ -63,16 +66,13 @@ class searchController extends controller {
 
             $dados['sidebar'] = true;
 
-            $categories = new Categories();
-                        
-            $dados = $store->getTemplateData();
+            // $dados = $store->getTemplateData();
             $dados['sidebar'] = true;
             
             // echo '<pre>';
-            // print_r($dados);
+            // print_r($filters);
 
-            $dados['testando'] = 'oi viado';
-
+            // var_dump($dados);
             $this->loadTemplate('search', $dados);
         } else {
             header("Location: ".BASE_URL);

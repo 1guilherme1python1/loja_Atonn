@@ -46,7 +46,7 @@
 					<div class="col-sm-7">
 						<div class="head_help">(11) 9999-9999</div>
 						<div class="head_email">contato@<span>loja2.com.br</span></div>
-						
+				
 						<div class="search_area">
 							<form method="GET" action="<?php echo BASE_URL; ?>search">
 								<input type="text" name="s" value="<?php echo (!empty($viewData['searchTerm']))?$viewData['searchTerm']:''; ?>" required placeholder="<?php $this->lang->get('SEARCHFORANITEM'); ?>" />
@@ -122,7 +122,7 @@
 		<section>
 			<div class="container">
 				<div class="row">
-					<?php if(isset($viewData['sidebar'])):?>
+					<?php if(isset($viewData['sidebar']) && $viewData['sidebar']==true):?>
 				  <div class="col-sm-3">
 				  	<aside>
 				  		<?php $this->loadView('sidebar', ['viewData'=>$viewData]);?>

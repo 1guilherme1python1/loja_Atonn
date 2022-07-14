@@ -11,12 +11,17 @@ class productController extends controller{
     public function open($id){
         $dados = array();
 
+        $store = new Store();
+
+
         $products = new Products();
         $categories = new Categories();
         $f = new Filters();
         $filters = [];
 
         $info = $products->getProductInfo($id);
+
+        $dados = $store->getTemplateData();
 
         if(count($info)>0){
 
@@ -30,6 +35,8 @@ class productController extends controller{
             $dados['products_options'] = $products->getOptionsByProductId($id);
 
             $dados['products_rates'] = $products->getRates($id, 5);
+
+            // $dados = $store->getTemplateData();
                 
             $this->loadTemplate('product', $dados);
 

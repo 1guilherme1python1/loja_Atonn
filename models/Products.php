@@ -152,7 +152,8 @@ class Products extends Model{
             }
         }
         // echo '<pre>';
-        // print_r($array);
+        // print_r($array); 
+        // var_dump($array);
         return $array;
     }
     public function getProductsImagesById($id){

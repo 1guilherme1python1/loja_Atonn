@@ -11,6 +11,7 @@ class categoriesController extends controller {
         $store = new Store();
         $categories = new Categories();
         $products = new Products();
+        $f = new Filters();
 
         $dados = $store->getTemplateData();
 
@@ -19,6 +20,9 @@ class categoriesController extends controller {
         $limit = 3;
 
         $dados['category_name'] = $categories->getCategoryName($id);
+
+        $dados['sidebar'] = true;
+
 
         if(!empty($dados['category_name'])){
 
@@ -33,9 +37,18 @@ class categoriesController extends controller {
 
             $dados['categories'] = $categories->getList();
             $dados['id_category'] = $id;
+
+
+            //sibebar----------------------//
+            $filters = [];
+            if(!empty($_GET['filter']) && is_array($_GET['filter'])){
+            $filters = $_GET['filter'];
+            }
+            $dados['filters'] = $f->getFilters($filters);
+
+            //-----------------------------//
         
             $this->loadTemplate('categories', $dados);
-
         } else {
             header("Location: ".BASE_URL);
         }
