@@ -32,7 +32,9 @@
         De:<span class="price_from"><?php echo 'R$ '.number_format($info['price_from'], 2);?></span><br>
         Por:<span class="original_price"><?php echo 'R$ '.number_format($info['price'], 2);?></span>
 
-        <form action="" method="POST" class="addtocartform">
+        <form action="<?php echo BASE_URL;?>cart/add" method="POST" class="addtocartform">
+            <input type="hidden" name="id_product" value="<?php echo $info['id']; ?>"/>
+            <input id="valueQuantyProduct" type="hidden" name="qt_product" value="1">
             <button id="buttonClickDown">-</button>
             <input type="text" name="qt" disabled class="addtocart_qt" value="1">
             <button id="buttonClickUp">+</button>

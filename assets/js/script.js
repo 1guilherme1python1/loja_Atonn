@@ -25,6 +25,7 @@ $( function() {
 const buttonUp = document.querySelector('#buttonClickUp');
 const buttonDown = document.querySelector('#buttonClickDown');
 const Quant = document.querySelector('.addtocart_qt');
+const valueQuantyProduct = document.querySelector('#valueQuantyProduct');
 
 const photo_item0 = document.querySelector('.photo_item0 img');
 const photo_item1 = document.querySelector('.photo_item1 img');
@@ -36,11 +37,13 @@ const Photomain = document.querySelector('.mainphoto img');
 buttonUp.addEventListener('click', function(e){
   e.preventDefault();
   Quant.value++;
+  valueQuantyProduct.value++;
 });
 buttonDown.addEventListener('click', function(e){
   e.preventDefault();
   if(Quant.value>1){
   Quant.value--;
+  valueQuantyProduct.value--;
   }
 });
 
