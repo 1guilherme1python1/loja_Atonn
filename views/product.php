@@ -40,11 +40,22 @@
         </form>
     </div>
 </div>
+<hr>
 <div class="row">
     <div class="col-sm-6">
-        <?php echo '<pre>'; print_r($products_options);?>
+        <h3><?php $this->lang->get('SPECIFICATIONS');?></h3>
+        <?php foreach($products_options as $po):?>
+            <strong><?php echo $po['name']?></strong>: <?php echo $po['value']?><br>
+        <?php endforeach;?>
     </div>
     <div class="col-sm-6">
-
+        <h3>Resenhas</h3>
+        <?php foreach($products_rates as $rate): ?>
+            <strong><?php echo $rate['user_name'];?>:</strong>
+            <?php for($q=0;$q<intval($rate['points']);$q++):?>
+                <img src="<?php echo BASE_URL;?>/assets/images/star.png" alt="" height="13">
+            <?php endfor; ?><br>
+            "<?php echo $rate['comment']?>"<br><br>
+        <?php endforeach; ?>
     </div>
 </div>

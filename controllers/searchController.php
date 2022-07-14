@@ -11,6 +11,7 @@ class searchController extends controller {
         $products = new Products();
         $categories = new Categories();
         $f = new Filters();
+        $store = new Store();
 
         if(isset($_GET['s']) && !empty($_GET['s'])){
 
@@ -28,20 +29,28 @@ class searchController extends controller {
 
             $filters['searchTerm'] = $searchTerm;
             $filters['category'] = $category;
-
-
+            
+            print_r($filters['searchTerm']);
             if(!empty($_GET['p'])){
                 $currentPage = $_GET['p'];
             }
             
             $offset = ($currentPage * $limit) - $limit;
             
-            $dados['list'] = $products->getList($offset,$limit, $filters);
+            $dados['list'] = $products->getList($offset, $limit, $filters);
+
+            // echo '<pre>';
+            // print_r($dados['list']);
+
             $dados['itemTotal'] = $products->getTotal($filters);
             $dados['numberOfPages'] = ceil($dados['itemTotal']/$limit);
             $dados['currentPage'] = $currentPage;
 
+
             $dados['filters'] = $f->getFilters($filters);
+
+            // echo '<pre>';
+            // print_r($dados['filters']);
 
             $dados['maxslider'] = $dados['filters']['maxslider'];
 
@@ -51,7 +60,18 @@ class searchController extends controller {
 
             $dados['searchTerm'] = $searchTerm;
             $dados['category'] = $category;
+
+            $dados['sidebar'] = true;
+
+            $categories = new Categories();
+                        
+            $dados = $store->getTemplateData();
+            $dados['sidebar'] = true;
             
+            // echo '<pre>';
+            // print_r($dados);
+
+            $dados['testando'] = 'oi viado';
 
             $this->loadTemplate('search', $dados);
         } else {

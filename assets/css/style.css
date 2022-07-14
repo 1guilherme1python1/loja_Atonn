@@ -477,3 +477,30 @@ footer h3 {
 	height: 50px;
 	align-items: center;
 }
+.widget_item{
+	margin-top: 10px;
+}
+.widget_info{
+	width: 80%;
+	float: left;
+}
+.widget_item a {
+	text-decoration: none;
+	color: black;
+}
+.widget_photo{
+	float: right;
+	width: 20%;
+}
+.widget_photo img{
+	border: 1px solid #ccc;
+	width: 100%;
+	height: 40px;
+}
+.widget_productname{
+	font-weight: bold;
+	color: #0e53a5;
+}
+.widget_price span{
+	color: #999;
+}

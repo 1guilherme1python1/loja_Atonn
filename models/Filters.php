@@ -71,7 +71,7 @@ class Filters extends Model{
 
         //filtros das opções 
         $array['options'] = $products->getAvailableOptions($filters);
-
+       
         return $array;
     }
 }

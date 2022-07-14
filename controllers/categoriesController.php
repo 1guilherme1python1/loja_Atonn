@@ -8,8 +8,11 @@ class categoriesController extends controller {
     public function enter($id){
         $dados = [];
 
+        $store = new Store();
         $categories = new Categories();
         $products = new Products();
+
+        $dados = $store->getTemplateData();
 
         $currentPage = 1;
         $offset = 0;

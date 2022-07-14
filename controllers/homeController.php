@@ -7,10 +7,13 @@ class homeController extends controller {
 
     public function index() {
         $dados = array();
+        
 
         $products = new Products();
-        $categories = new Categories();
         $f = new Filters();
+        $store = new Store();
+
+        $dados = $store->getTemplateData();
 
         $currentPage = 1;
         $offset = 0;
@@ -36,9 +39,10 @@ class homeController extends controller {
 
         $dados['maxslider'] = $dados['filters']['maxslider'];
 
-        $dados['categories'] = $categories->getList(); 
         
         $dados['filters_select'] = $filters;
+
+        $dados['sidebar'] = true;
 
         $this->loadTemplate('home', $dados);
     }

@@ -28,6 +28,8 @@ class productController extends controller{
             $dados['info'] = $info[0];
             $dados['info_images'] = $products->getProductsImagesById($id);
             $dados['products_options'] = $products->getOptionsByProductId($id);
+
+            $dados['products_rates'] = $products->getRates($id, 5);
                 
             $this->loadTemplate('product', $dados);
 
