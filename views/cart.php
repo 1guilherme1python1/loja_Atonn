@@ -31,3 +31,9 @@
         <td></td>
     </tr>
 </table>
+<hr>
+Qual seu CEP?<br/>
+<form action="">
+    <input type="number" name="cep"><br>
+    <input type="button" value="calcular">
+</form>

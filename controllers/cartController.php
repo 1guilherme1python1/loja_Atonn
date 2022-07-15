@@ -12,12 +12,22 @@ class cartController extends controller {
         $products = new Products();
         $store = new Store();
         $cart = new Cart();
+        $cep = '';
+        $shipping = [];
+
+        if(!empty($_POST['cep'])){
+            $cep = intval($_POST['cep']);
+            $shipping = $cart->shippingCalculate($cep);
+        }
 
         if(!isset($_SESSION['cart']) || (isset($_SESSION['cart']) && count($_SESSION['cart'])==0)){
             header("Location: ".BASE_URL);
             exit;
         }
         $dados = $store->getTemplateData();
+
+        //------correios-------//
+        $dados['shipping'] = $shipping;
 
         $dados['products'] = $cart->getList();
 
