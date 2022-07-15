@@ -73,11 +73,11 @@
 						<a href="<?php echo BASE_URL; ?>cart">
 							<div class="cartarea">
 								<div class="carticon">
-									<div class="cartqt">11</div>
+									<div class="cartqt"><?php echo $viewData['cart_qt'];?></div>
 								</div>
 								<div class="carttotal">
 									<?php $this->lang->get('CART'); ?>:<br/>
-									<span>R$ 750,80</span>
+									<span>R$ <?php echo number_format($viewData['cart_sub'],2,',','.');?></span>
 								</div>
 							</div>
 						</a>

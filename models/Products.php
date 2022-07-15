@@ -1,5 +1,21 @@
 <?php
 class Products extends Model{
+    
+    public function getInfo($id){
+        $array = [];
+
+        $sql = $this->db->prepare("SELECT name, price FROM products WHERE id=:id");
+        $sql->bindValue(':id', $id);
+        $sql->execute();
+
+        if($sql->rowCount()>0){
+            $array = $sql->fetch(PDO::FETCH_ASSOC);
+            $images = current($this->getProductsImagesById($id));
+            $array['images'] = $images['url'];
+        }
+        // var_dump($array);
+        return $array;
+    }
 
     public function getAvailableOptions($filters = []){
         $groups = [];

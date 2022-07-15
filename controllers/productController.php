@@ -21,6 +21,8 @@ class productController extends controller{
 
         $info = $products->getProductInfo($id);
 
+        // var_dump($info);
+
         $dados = $store->getTemplateData();
 
         if(count($info)>0){
