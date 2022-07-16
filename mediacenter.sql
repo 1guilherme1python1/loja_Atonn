@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 08-Jul-2022 às 06:13
+-- Tempo de geração: 16-Jul-2022 às 06:02
 -- Versão do servidor: 10.4.22-MariaDB
 -- versão do PHP: 8.1.2
 
@@ -120,21 +120,26 @@ CREATE TABLE `products` (
   `sale` tinyint(1) NOT NULL,
   `bestseller` tinyint(1) NOT NULL,
   `new_product` tinyint(1) NOT NULL,
-  `options` varchar(200) DEFAULT ''
+  `options` varchar(200) DEFAULT '',
+  `weight` float NOT NULL,
+  `width` float NOT NULL,
+  `height` float NOT NULL,
+  `lenght` float NOT NULL,
+  `diameter` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `products`
 --
 
-INSERT INTO `products` (`id`, `id_category`, `id_brand`, `name`, `description`, `stock`, `price`, `price_from`, `rating`, `featured`, `sale`, `bestseller`, `new_product`, `options`) VALUES
-(1, 6, 1, 'Monitor 21 Polegadas', 'Alguma descrição legal', 10, 499, 599, 0, 0, 1, 0, 1, '1,2,4'),
-(2, 6, 2, 'Monitor 18 Polegadas', 'Alguma descrição legal', 10, 399, 999, 2, 0, 1, 1, 0, '1,2'),
-(3, 6, 2, 'Monitor 19 polegadas', 'Alguma descrição legal', 10, 600, 1000, 0, 0, 1, 0, 0, '1,2'),
-(4, 6, 3, 'Monitor 15 polegadas', 'Alguma descrição legal', 10, 600, 1000, 4, 0, 0, 0, 1, '1,4'),
-(5, 6, 3, 'Monitor 10 polegadas', 'Alguma descrição legal', 10, 900, 0, 5, 0, 1, 0, 0, '1'),
-(6, 6, 3, 'Monitor 21  polegadas', 'Alguma descrição legal', 10, 600, 1000, 0, 0, 0, 1, 0, '1,2,4'),
-(7, 7, 1, 'Som JBL', 'Alguma descrição legal', 10, 2890, 1000, 1, 0, 1, 0, 0, '4');
+INSERT INTO `products` (`id`, `id_category`, `id_brand`, `name`, `description`, `stock`, `price`, `price_from`, `rating`, `featured`, `sale`, `bestseller`, `new_product`, `options`, `weight`, `width`, `height`, `lenght`, `diameter`) VALUES
+(1, 6, 1, 'Monitor 21 Polegadas', 'Alguma descrição legal', 10, 499, 599, 0, 1, 1, 0, 1, '1,2,4', 0.9, 20, 15, 20, 15),
+(2, 6, 2, 'Monitor 18 Polegadas', 'Alguma descrição legal', 10, 399, 999, 2, 0, 1, 1, 0, '1,2', 0.8, 20, 15, 20, 15),
+(3, 6, 2, 'Monitor 19 polegadas', 'Alguma descrição legal', 10, 600, 1000, 0, 1, 1, 0, 0, '1,2', 0.7, 20, 15, 20, 15),
+(4, 6, 3, 'Monitor 15 polegadas', 'Alguma descrição legal', 10, 600, 1000, 4, 0, 0, 0, 1, '1,4', 0.6, 20, 15, 20, 15),
+(5, 6, 3, 'Monitor 10 polegadas', 'Alguma descrição legal', 10, 900, 0, 5, 1, 1, 0, 0, '1', 0.5, 20, 15, 20, 15),
+(6, 6, 3, 'Monitor 21  polegadas', 'Alguma descrição legal', 10, 600, 1000, 0, 0, 0, 1, 0, '1,2,4', 0.4, 20, 15, 20, 15),
+(7, 7, 1, 'Som JBL', 'Alguma descrição legal', 10, 2890, 1000, 1, 1, 1, 0, 0, '4', 0.3, 20, 15, 20, 15);
 
 -- --------------------------------------------------------
 
@@ -154,12 +159,15 @@ CREATE TABLE `products_images` (
 
 INSERT INTO `products_images` (`id`, `id_product`, `url`) VALUES
 (1, 1, '1.jpg'),
-(2, 2, '2.jpg'),
+(2, 2, '11.jpg'),
 (3, 3, '3.jpg'),
 (4, 4, '4.jpg'),
 (5, 5, '5.jpg'),
 (6, 6, '6.jpg'),
-(7, 7, '8.jpg');
+(7, 7, '8.jpg'),
+(8, 2, '10.jpg'),
+(9, 2, '9.jpg'),
+(10, 2, '2.jpg');
 
 -- --------------------------------------------------------
 
@@ -243,6 +251,14 @@ CREATE TABLE `rates` (
   `comment` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Extraindo dados da tabela `rates`
+--
+
+INSERT INTO `rates` (`id`, `id_product`, `id_user`, `date_rated`, `points`, `comment`) VALUES
+(1, 2, 1, '2022-07-12 22:07:51', 4, 'Produto muito legal'),
+(2, 2, 1, '2022-07-12 22:09:11', 2, 'Produto meio ruim');
+
 -- --------------------------------------------------------
 
 --
@@ -252,8 +268,16 @@ CREATE TABLE `rates` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `email` varchar(250) NOT NULL DEFAULT '',
-  `password` varchar(250) NOT NULL DEFAULT ''
+  `password` varchar(250) NOT NULL DEFAULT '',
+  `name` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `password`, `name`) VALUES
+(1, 'guilherme@gmail.com', '', 'Guilherminho Lindo');
 
 --
 -- Índices para tabelas despejadas
@@ -369,7 +393,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT de tabela `products_images`
 --
 ALTER TABLE `products_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `products_options`
@@ -393,7 +417,13 @@ ALTER TABLE `purchases_transactions`
 -- AUTO_INCREMENT de tabela `rates`
 --
 ALTER TABLE `rates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de tabela `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
