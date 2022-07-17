@@ -4,7 +4,7 @@ class Products extends Model{
     public function getInfo($id){
         $array = [];
 
-        $sql = $this->db->prepare("SELECT name, price FROM products WHERE id=:id");
+        $sql = $this->db->prepare("SELECT * FROM products WHERE id=:id");
         $sql->bindValue(':id', $id);
         $sql->execute();
 

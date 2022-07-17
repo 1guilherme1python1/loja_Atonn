@@ -504,3 +504,11 @@ footer h3 {
 .widget_price span{
 	color: #999;
 }
+.button_pay{
+	background-color: #59b210;
+	font-size: 20px;
+	border-radius: 5px;
+	padding: 10px;
+	border: 0;
+	color: white;
+}

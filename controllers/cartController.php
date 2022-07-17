@@ -9,7 +9,6 @@ class cartController extends controller {
     public function index() {
         $dados = array();
         
-        $products = new Products();
         $store = new Store();
         $cart = new Cart();
         $cep = '';
@@ -18,6 +17,12 @@ class cartController extends controller {
         if(!empty($_POST['cep'])){
             $cep = intval($_POST['cep']);
             $shipping = $cart->shippingCalculate($cep);
+
+            $_SESSION['shipping'] = $shipping;
+        }
+
+        if(!empty($_SESSION['shipping'])){
+            $shipping = $_SESSION['shipping'];
         }
 
         if(!isset($_SESSION['cart']) || (isset($_SESSION['cart']) && count($_SESSION['cart'])==0)){
@@ -28,12 +33,17 @@ class cartController extends controller {
 
         //------correios-------//
         $dados['shipping'] = $shipping;
+        //--------------------//
+
 
         $dados['products'] = $cart->getList();
+        
 
         $this->loadTemplate('cart', $dados);
     }
     public function add(){
+        unset($_SESSION['shipping']);
+
         if(!empty($_POST['id_product'])){
             $id = intval($_POST['id_product']);
             $qt = intval($_POST['qt_product']);
@@ -43,7 +53,7 @@ class cartController extends controller {
         }
         if(isset($_SESSION['cart'][$id])){
             $_SESSION['cart'][$id] += $qt;
-        } else{
+        } else {
         $_SESSION['cart'][$id] = $qt;
         }
 
@@ -51,9 +61,10 @@ class cartController extends controller {
         exit;
     }
     public function remove($id){
+        unset($_SESSION['shipping']);
+
         if(isset($_SESSION['cart'][$id])){
             unset($_SESSION['cart'][$id]);
-            // $_SESSION['cart']
         }
         header("Location: ".BASE_URL."cart");
     }
@@ -61,6 +72,21 @@ class cartController extends controller {
         if(isset($_SESSION['cart'][$id])){
             $_SESSION['cart'][$id] -= 1;   
         }
+        header("Location: ".BASE_URL."cart");
+        exit;
+    }
+    public function payment_redirect(){
+        if(!empty($_POST['payment_type'])){
+            $payment_type = $_POST['payment_type'];
+
+            switch($payment_type){
+                case 'checkout_transparent':
+                    header("Location: ".BASE_URL."pagseguro");
+                    exit;
+                break;
+            }
+        }
+
         header("Location: ".BASE_URL."cart");
         exit;
     }
